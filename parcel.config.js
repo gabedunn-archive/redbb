@@ -1,7 +1,7 @@
 const Bundler = require('parcel-bundler')
-const Path = require('path')
+const {join} = require('path')
 
-const entryFiles = Path.join(__dirname, 'index.js')
+const entryFiles = join(__dirname, 'src', 'index.js')
 
 const options = {
   outDir: __dirname,

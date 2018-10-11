@@ -1,0 +1,21 @@
+{
+  "name": "redbb",
+  "version": "1.0.0",
+  "description": "Simple script to generate BBCode for music.",
+  "main": "redb.js",
+  "author": "redxtech",
+  "license": "MIT",
+  "scripts": {
+    "build": "node parcel.config.js",
+    "go": "node redbb.js"
+  },
+  "devDependencies": {
+    "envup": "^1.1.1",
+    "parcel-bundler": "^1.10.2"
+  },
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "inquirer": "^6.2.0",
+    "r2": "^2.0.1"
+  }
+}
