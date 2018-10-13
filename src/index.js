@@ -1,7 +1,13 @@
-import { getAPI, getQuery, getQueryInfo, getReleaseInfo } from './fetchers'
+import {
+  getAPI,
+  getQuery,
+  getQueryInfo,
+  getReleaseInfo,
+  getScrapers
+} from './fetchers'
 import { genBBCode, getMedia } from './generators'
 import {
-  chooseRelease,
+  chooseRelease, chooseScraper,
   getDescription,
   getFormat,
   getImage,
@@ -13,11 +19,13 @@ import {
 } from './input'
 
 (async () => {
+  const API = getAPI()
+  const scrapers = getScrapers(await API)
   const tracker = await getTracker()
+  const scraper = await chooseScraper(await scrapers)
   const input = await getReleaseTitle()
   const image = tracker === 'RedTopia' ? getImage() : undefined
-  const API = getAPI()
-  const query = getQuery(await API, await input)
+  const query = getQuery(await API, await input, await scraper)
   const queryResult = getQueryInfo(await query)
   await image
   const chosenRelease = await chooseRelease(await queryResult)

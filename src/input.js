@@ -58,6 +58,17 @@ export const chooseRelease = async releases => {
   })
 }
 
+export const chooseScraper = async scrapers => {
+  const defaultChoice = scrapers.filter(scraper => scraper.default)[0].value
+  return (await inq.prompt({
+    type: 'list',
+    name: 'scraper',
+    message: 'Which release:',
+    choices: scrapers,
+    default: defaultChoice
+  })).scraper
+}
+
 export const getFormat = async () => {
   return await inq.prompt([
     {
@@ -226,7 +237,6 @@ export const getManual = async (title) => {
     format: `${ answers.media }, ${ answers.type }`,
     artists: [{name: splitTitle[0]}],
     releaseEvents: [{date: answers.year}],
-    genres: [answers.genre],
     title: splitTitle[1],
     url: answers.url,
     discs: [

@@ -126,7 +126,7 @@ const getAPI = async () => {
 exports.getAPI = getAPI;
 
 const getScrapers = async API => {
-  const request = _r.default.post(API.scrapers);
+  const request = _r.default.get(API.scrapers);
 
   const response = await request.response;
   return response.json();
@@ -330,9 +330,8 @@ const genBBCode = async (tracker, image, artist, title, year, labels, format, me
   bb += `${await genType(media)}\r\n`;
   bb += format ? `${genFormat(format.format, format.bit)}\r\n` : '';
   bb += RTP ? `${await genMedia(media)}\r\n` : '';
-  bb += `${genGenre(genres)}\r\n`;
-  bb += styles.length ? `$
-    { genStyles(styles) }\r\n\r\n` : '\r\n';
+  bb += genres.length ? `${genGenre(genres)}\r\n` : '';
+  bb += styles.length ? `${genStyles(styles)}\r\n\r\n` : '\r\n';
   bb += description.desc ? `${genDescription(description.description)}\r\n\r\n` : '';
   bb += `${genTrackList(tracks)}\r\n\r\n`;
   bb += genMoreLinks(url, linkBB);
@@ -347,7 +346,7 @@ exports.genBBCode = genBBCode;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getManual = exports.getSpectrograms = exports.getDescription = exports.getMoreLinks = exports.getFormat = exports.chooseRelease = exports.getImage = exports.getReleaseTitle = exports.getTracker = void 0;
+exports.getManual = exports.getSpectrograms = exports.getDescription = exports.getMoreLinks = exports.getFormat = exports.chooseScraper = exports.chooseRelease = exports.getImage = exports.getReleaseTitle = exports.getTracker = void 0;
 
 var _inquirer = _interopRequireDefault(require("inquirer"));
 
@@ -412,6 +411,19 @@ const chooseRelease = async releases => {
 };
 
 exports.chooseRelease = chooseRelease;
+
+const chooseScraper = async scrapers => {
+  const defaultChoice = scrapers.filter(scraper => scraper.default)[0].value;
+  return (await _inquirer.default.prompt({
+    type: 'list',
+    name: 'scraper',
+    message: 'Which release:',
+    choices: scrapers,
+    default: defaultChoice
+  })).scraper;
+};
+
+exports.chooseScraper = chooseScraper;
 
 const getFormat = async () => {
   return await _inquirer.default.prompt([{
@@ -552,7 +564,6 @@ const getManual = async title => {
     releaseEvents: [{
       date: answers.year
     }],
-    genres: [answers.genre],
     title: splitTitle[1],
     url: answers.url,
     discs: [{
@@ -576,11 +587,13 @@ var _generators = require("./generators");
 var _input = require("./input");
 
 (async () => {
+  const API = (0, _fetchers.getAPI)();
+  const scrapers = (0, _fetchers.getScrapers)((await API));
   const tracker = await (0, _input.getTracker)();
+  const scraper = await (0, _input.chooseScraper)((await scrapers));
   const input = await (0, _input.getReleaseTitle)();
   const image = tracker === 'RedTopia' ? (0, _input.getImage)() : undefined;
-  const API = (0, _fetchers.getAPI)();
-  const query = (0, _fetchers.getQuery)((await API), (await input));
+  const query = (0, _fetchers.getQuery)((await API), (await input), (await scraper));
   const queryResult = (0, _fetchers.getQueryInfo)((await query));
   await image;
   const chosenRelease = await (0, _input.chooseRelease)((await queryResult));

@@ -7,7 +7,7 @@ export const getAPI = async () => {
 }
 
 export const getScrapers = async API => {
-  const request = r2.post(API.scrapers)
+  const request = r2.get(API.scrapers)
   const response = await request.response
   return response.json()
 }
