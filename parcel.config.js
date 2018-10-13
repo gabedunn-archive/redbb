@@ -6,7 +6,7 @@ const entryFiles = join(__dirname, 'src', 'index.js')
 const options = {
   outDir: __dirname,
   outFile: 'redbb.js',
-  watch: true,
+  watch: false,
   contentHash: false,
   minify: false,
   scopeHoist: false,

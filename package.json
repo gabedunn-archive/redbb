@@ -7,10 +7,12 @@
   "license": "MIT",
   "scripts": {
     "build": "node parcel.config.js",
+    "dev": "nodemon parcel.config.js --ignore redbb.js --ignore .cache",
     "go": "node redbb.js"
   },
   "devDependencies": {
     "envup": "^1.1.1",
+    "nodemon": "^1.18.4",
     "parcel-bundler": "^1.10.2"
   },
   "dependencies": {
