@@ -16,7 +16,6 @@
     "parcel-bundler": "^1.10.2"
   },
   "dependencies": {
-    "dotenv": "^6.1.0",
     "inquirer": "^6.2.0",
     "r2": "^2.0.1"
   }

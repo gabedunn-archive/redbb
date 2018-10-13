@@ -146,8 +146,8 @@ export const genBBCode = async (
   bb += `${ await genType(media) }\r\n`
   bb += format ? `${ genFormat(format.format, format.bit) }\r\n` : ''
   bb += RTP ? `${ await genMedia(media) }\r\n` : ''
-  bb += genres.length ? `${ genGenre(genres) }\r\n` : ''
-  bb += styles.length ? `${ genStyles(styles) }\r\n\r\n` : '\r\n'
+  bb += genres && genres.length ? `${ genGenre(genres) }\r\n` : ''
+  bb += styles && styles.length ? `${ genStyles(styles) }\r\n\r\n` : '\r\n'
   bb += description.desc ? `${ genDescription(
     description.description) }\r\n\r\n` : ''
   bb += `${ genTrackList(tracks) }\r\n\r\n`
