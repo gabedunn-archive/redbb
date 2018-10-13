@@ -267,7 +267,7 @@ const genType = async types => {
 
 exports.genType = genType;
 
-const genFormat = (format, bit) => `[b]Format:[/b] ${format} [${bit}]`;
+const genFormat = (format, bit) => bit ? `[b]Format:[/b] ${format} [${bit}]` : `[b]Format:[/b] ${format}`;
 
 exports.genFormat = genFormat;
 
@@ -430,7 +430,7 @@ const getFormat = async () => {
     type: 'list',
     name: 'format',
     message: 'What format is the upload:',
-    choices: ['FLAC', 'MP3', 'AAC']
+    choices: ['FLAC', 'DSD', 'MP3', 'AAC']
   }, {
     type: 'list',
     name: 'bit',
@@ -442,7 +442,7 @@ const getFormat = async () => {
     name: 'bit',
     message: 'What is the bitrate:',
     choices: ['320 CBR', '256 CBR', '192 CBR', new _inquirer.default.Separator(), 'V0 VBR', 'V1 VBR', 'V2 VBR'],
-    when: answers => answers.format !== 'FLAC'
+    when: answers => answers.format !== 'FLAC' && answers.format !== 'DSD'
   }]);
 };
 

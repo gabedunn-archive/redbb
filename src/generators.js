@@ -76,7 +76,9 @@ export const genType = async types => {
 }
 
 export const genFormat = (
-  format, bit) => `[b]Format:[/b] ${ format } [${ bit }]`
+  format, bit) => bit
+  ? `[b]Format:[/b] ${ format } [${ bit }]`
+  : `[b]Format:[/b] ${ format }`
 
 export const genMedia = async medias => {
   const media = await getMedia(medias)

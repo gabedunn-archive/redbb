@@ -75,7 +75,7 @@ export const getFormat = async () => {
       type: 'list',
       name: 'format',
       message: 'What format is the upload:',
-      choices: ['FLAC', 'MP3', 'AAC']
+      choices: ['FLAC', 'DSD', 'MP3', 'AAC']
     },
     {
       type: 'list',
@@ -97,7 +97,7 @@ export const getFormat = async () => {
         'V1 VBR',
         'V2 VBR'
       ],
-      when: answers => answers.format !== 'FLAC'
+      when: answers => answers.format !== 'FLAC' && answers.format !== 'DSD'
     }
   ])
 }
