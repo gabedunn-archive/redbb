@@ -165,7 +165,7 @@ export const getDescription = async () => {
 }
 
 export const getSpectrograms = async () => {
-  return await inq.prompt(
+  const answers = await inq.prompt(
     {
       type: 'input',
       name: 'spectrograms',
@@ -174,6 +174,13 @@ export const getSpectrograms = async () => {
       filter: spectograms => spectograms.split(',').map(item => item.trim(item))
     }
   )
+  if (answers.spectrograms.length === 1 && answers.spectrograms[0] === '') {
+    return {
+      spectrograms: undefined
+    }
+  } else {
+    return answers
+  }
 }
 
 export const getManual = async (title) => {

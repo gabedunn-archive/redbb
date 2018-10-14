@@ -500,12 +500,20 @@ const getDescription = async () => {
 exports.getDescription = getDescription;
 
 const getSpectrograms = async () => {
-  return await _inquirer.default.prompt({
+  const answers = await _inquirer.default.prompt({
     type: 'input',
     name: 'spectrograms',
     message: 'Enter a comma separated list of direct urls to the' + ' spectrograms:',
     filter: spectograms => spectograms.split(',').map(item => item.trim(item))
   });
+
+  if (answers.spectrograms.length === 1 && answers.spectrograms[0] === '') {
+    return {
+      spectrograms: undefined
+    };
+  } else {
+    return answers;
+  }
 };
 
 exports.getSpectrograms = getSpectrograms;
