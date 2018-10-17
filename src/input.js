@@ -231,7 +231,7 @@ export const getManual = async (title) => {
       message: 'Enter a comma separated list of the tracks in the order they appear on the album:',
       filter: tracks => tracks.split(',').map((item, i) => {
         return {
-          number: `${ i }`,
+          number: `${ i + 1 }`,
           title: item.trim(item)
         }
       })
