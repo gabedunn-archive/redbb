@@ -248,7 +248,7 @@ const genImage = image => `[img]${image}[/img]`;
 
 exports.genImage = genImage;
 
-const genTitle = (artists, title) => `[size=29][b]${artists[0].name} - ${title}[/b][/size]`;
+const genTitle = (artists, title) => `[size=29][b]${artists[0].isVarious ? 'Various' : artists[0].name} - ${title}[/b][/size]`;
 
 exports.genTitle = genTitle;
 

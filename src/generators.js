@@ -57,58 +57,60 @@ const display = seconds => {
     format).join(':')
 }
 
-export const genImage = image => `[img]${ image }[/img]`
+export const genImage = image => `[img]${image}[/img]`
 
 export const genTitle = (
-  artists, title) => `[size=29][b]${ artists[0].name } - ${ title }[/b][/size]`
+  artists, title) => `[size=29][b]${artists[0].isVarious
+  ? 'Various'
+  : artists[0].name} - ${title}[/b][/size]`
 
-export const genYear = year => `[b]Released:[/b] ${ year }`
+export const genYear = year => `[b]Released:[/b] ${year}`
 
-export const genLabel = labels => `[b]Label${ labels.length > 1
+export const genLabel = labels => `[b]Label${labels.length > 1
   ? 's'
-  : '' }:[/b] ${ labels.length > 1
+  : ''}:[/b] ${labels.length > 1
   ? labels.join(', ')
-  : labels[0] }`
+  : labels[0]}`
 
 export const genType = async types => {
   const type = await getType(types)
-  return `[b]Type:[/b] ${ type }`
+  return `[b]Type:[/b] ${type}`
 }
 
 export const genFormat = (
   format, bit) => bit
-  ? `[b]Format:[/b] ${ format } [${ bit }]`
-  : `[b]Format:[/b] ${ format }`
+  ? `[b]Format:[/b] ${format} [${bit}]`
+  : `[b]Format:[/b] ${format}`
 
 export const genMedia = async medias => {
   const media = await getMedia(medias)
-  return `[b]Media:[/b] ${ media }`
+  return `[b]Media:[/b] ${media}`
 }
 
-export const genGenre = genre => `[b]Genre${ genre.length > 1
+export const genGenre = genre => `[b]Genre${genre.length > 1
   ? 's'
-  : '' }:[/b] ${ genre.length > 1
+  : ''}:[/b] ${genre.length > 1
   ? genre.join(', ')
-  : genre[0] }`
+  : genre[0]}`
 
-export const genStyles = style => `[b]Style${ style.length > 1
+export const genStyles = style => `[b]Style${style.length > 1
   ? 's'
-  : '' }:[/b] ${ style.length > 1
+  : ''}:[/b] ${style.length > 1
   ? style.join(', ')
-  : style[0] }`
+  : style[0]}`
 
 export const genDescription =
-  description => `[size=18][b]Description:[/b][/size]\r\n${ description }`
+  description => `[size=18][b]Description:[/b][/size]\r\n${description}`
 
 export const genTrackList = discs => {
   const discList = ['[size=18][b]Tracklist:[/b][/size]']
   discs.forEach(disc => {
-    const trackList = discs.length > 1 ? [`[b]Disc ${ disc.number }:[/b]`] : []
+    const trackList = discs.length > 1 ? [`[b]Disc ${disc.number}:[/b]`] : []
     disc.tracks.forEach(track => {
         trackList.push(
-          `[b]${ track.number }.[/b] ${ track.title }${ track.length
-            ? ` (${ display(track.length) })`
-            : '' }`)
+          `[b]${track.number}.[/b] ${track.title}${track.length
+            ? ` (${display(track.length)})`
+            : ''}`)
       }
     )
     discList.push(trackList.join('\r\n'))
@@ -117,18 +119,18 @@ export const genTrackList = discs => {
 }
 
 export const genMoreLinksItem = (title, url) =>
-  `[url=${ url }]${ title }[/url]`
+  `[url=${url}]${title}[/url]`
 
 export const genMoreLinks = (url, links) => {
   return links.length > 0
-    ? `[b]More Links:[/b]\r\n[url=${ url }]More Information[/url]\r\n${ links.join(
-      '\r\n') }`
-    : `[b][url=${ url }]More Information.[/url][/b]`
+    ? `[b]More Links:[/b]\r\n[url=${url}]More Information[/url]\r\n${links.join(
+      '\r\n')}`
+    : `[b][url=${url}]More Information.[/url][/b]`
 }
 
 export const genSpectrograms =
-  spectrograms => `[b]Spectrograms:[/b]\r\n[spoiler]\r\n[img]${ spectrograms.join(
-    '[/img]\r\n[img]') }[/img]\r\n[/spoiler]`
+  spectrograms => `[b]Spectrograms:[/b]\r\n[spoiler]\r\n[img]${spectrograms.join(
+    '[/img]\r\n[img]')}[/img]\r\n[/spoiler]`
 
 export const genBBCode = async (
   tracker, image, artist, title, year, labels, format, media, genres, styles,
@@ -140,20 +142,20 @@ export const genBBCode = async (
   const editionInfo = media.filter(
     item => item.toLowerCase().includes('edition'))
 
-  let bb = image ? `${ genImage(image) }\r\n\r\n` : ''
-  bb += `${ editionInfo.length === 0 ? genTitle(artist, title) : genTitle(
-    artist, `${ title }(${ editionInfo[0] })`) }\r\n`
-  bb += `${ genYear(year) }\r\n`
-  bb += `${ genLabel(labels) }\r\n`
-  bb += `${ await genType(media) }\r\n`
-  bb += format ? `${ genFormat(format.format, format.bit) }\r\n` : ''
-  bb += RTP ? `${ await genMedia(media) }\r\n` : ''
-  bb += genres && genres.length ? `${ genGenre(genres) }\r\n` : ''
-  bb += styles && styles.length ? `${ genStyles(styles) }\r\n\r\n` : '\r\n'
-  bb += description.desc ? `${ genDescription(
-    description.description) }\r\n\r\n` : ''
-  bb += `${ genTrackList(tracks) }\r\n\r\n`
+  let bb = image ? `${genImage(image)}\r\n\r\n` : ''
+  bb += `${editionInfo.length === 0 ? genTitle(artist, title) : genTitle(
+    artist, `${title}(${editionInfo[0]})`)}\r\n`
+  bb += `${genYear(year)}\r\n`
+  bb += `${genLabel(labels)}\r\n`
+  bb += `${await genType(media)}\r\n`
+  bb += format ? `${genFormat(format.format, format.bit)}\r\n` : ''
+  bb += RTP ? `${await genMedia(media)}\r\n` : ''
+  bb += genres && genres.length ? `${genGenre(genres)}\r\n` : ''
+  bb += styles && styles.length ? `${genStyles(styles)}\r\n\r\n` : '\r\n'
+  bb += description.desc ? `${genDescription(
+    description.description)}\r\n\r\n` : ''
+  bb += `${genTrackList(tracks)}\r\n\r\n`
   bb += genMoreLinks(url, linkBB)
-  bb += spectrograms ? `\r\n\r\n${ genSpectrograms(spectrograms) }` : ''
+  bb += spectrograms ? `\r\n\r\n${genSpectrograms(spectrograms)}` : ''
   return bb
 }
